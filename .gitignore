@@ -24,3 +24,9 @@ hs_err_pid*
 
 ./.idea
 ./target
+
+# --- JaCoCo: сохраняем только нужные артефакты ---
+!target/jacoco.exec
+!target/site/
+!target/site/jacoco/
+!target/site/jacoco/**
