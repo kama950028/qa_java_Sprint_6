@@ -12,7 +12,7 @@ class AnimalTest {
 
     @Test
     @DisplayName("getFood(String) бросает Exception для неизвестного вида")
-    void getFoodThrowsOnUnknownKind() {
+    void getFoodThrowsOnUnknownKindTest() {
         String invalidKind = "НеизвестнаяКатегория";
         Exception ex = assertThrows(Exception.class,
                 () -> animal.getFood(invalidKind),
@@ -23,7 +23,7 @@ class AnimalTest {
 
     @Test
     @DisplayName("getFamily() возвращает строку, начинающуюся с «Существует несколько семейств»")
-    void getFamilyReturnsStaticString() {
+    void getFamilyReturnsStaticStringTest() {
         String family = animal.getFamily();
         assertNotNull(family, "getFamily() не должен возвращать null");
         assertTrue(family.startsWith("Существует несколько семейств"),

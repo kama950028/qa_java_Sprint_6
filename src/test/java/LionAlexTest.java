@@ -9,14 +9,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LionAlexTest {
     @Test
     @DisplayName("Конструктор Alex не бросает исключений и корректно вызывает родительский конструктор")
-    void constructorDoesNotThrow() {
+    void constructorDoesNotThrowTest() {
         assertDoesNotThrow(LionAlex::new,
                 "Создание объекта Alex должно проходить без ошибок");
     }
 
     @Test
     @DisplayName("getKittens() у Alex всегда возвращает 0")
-    void getKittensReturnsZero() throws Exception {
+    void getKittensReturnsZeroTest() throws Exception {
         LionAlex lionAlex = new LionAlex();
         assertEquals(0, lionAlex.getKittens(),
                 "У Алекса нет львят, метод getKittens() должен вернуть 0");
@@ -24,14 +24,14 @@ public class LionAlexTest {
 
     @Test
     @DisplayName("Alex.is Male: doesHaveMane() наследуется от Lion и должно вернуть true")
-    void doesHaveManeIsTrue() throws Exception {
+    void doesHaveManeIsTrueTest() throws Exception {
         LionAlex lionAlex = new LionAlex();
         assertTrue(lionAlex.doesHaveMane(), "У льва-самца должна быть грива, doesHaveMane() == true");
     }
 
     @Test
     @DisplayName("getFood() у Alex делегирует Feline.eatMeat() (проверка basic)")
-    void getFoodDelegatesToFeline() throws Exception {
+    void getFoodDelegatesToFelineTest() throws Exception {
         LionAlex lionAlex = new LionAlex();
         List<String> expected = List.of("Животные", "Птицы", "Рыба");
         List<String> actual = lionAlex.getFood();
@@ -41,7 +41,7 @@ public class LionAlexTest {
 
     @Test
     @DisplayName("getFriends() возвращает список друзей Alex-а")
-    void getFriendsReturnsCorrectList() throws Exception {
+    void getFriendsReturnsCorrectListTest() throws Exception {
         LionAlex lionAlex = new LionAlex();
         List<String> expectedFriends = List.of("Марти", "Глория", "Мелман");
         assertEquals(expectedFriends, lionAlex.getFriends(),
@@ -50,7 +50,7 @@ public class LionAlexTest {
 
     @Test
     @DisplayName("getPlaceOfLiving() возвращает «Нью-Йоркский зоопарк»")
-    void getPlaceOfLivingReturnsZoo() throws Exception {
+    void getPlaceOfLivingReturnsZooTest() throws Exception {
         LionAlex lionAlex = new LionAlex();
         assertEquals("Нью-Йоркский зоопарк", lionAlex.getPlaceOfLiving(),
                 "Место жительства Алекса должно быть \"Нью-Йоркский зоопарк\"");

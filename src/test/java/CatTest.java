@@ -22,28 +22,40 @@ public class CatTest {
     }
 
     @Test
-    void getSoundShouldReturnMeow() {
+    void getSoundShouldReturnMeowTest() {
         assertEquals("Мяу", cat.getSound(), "getSound() должен возвращать \"Мяу\"");
     }
 
     @Test
-    void getFoodShouldDelegateToFelineEatMeat() throws Exception {
+    void getFoodShouldDelegateToFelineEatMeatTest() throws Exception {
         // Подготавливаем мок: пусть eatMeat() вернёт этот список
-        List<String> expected = List.of("Животные", "Птицы");
+        List<String> expected = List.of("Животные", "Птицы", "Рыба");
         Mockito.when(felineMock.eatMeat()).thenReturn(expected);
 
         List<String> actual = cat.getFood();
 
-        // Проверяем, что метод был действительно вызван
-        Mockito.verify(felineMock).eatMeat();
         assertEquals(expected, actual, "Cat.getFood() должен вернуть тот же список, что и feline.eatMeat()");
+    }
+    @Test
+    void getFoodShouldCallEatMeatOnFelineTest() throws Exception {
+        Mockito.when(felineMock.eatMeat()).thenReturn(List.of("Животные", "Птицы", "Рыба"));
+        cat.getFood();
+        Mockito.verify(felineMock).eatMeat();
     }
 
     @Test
-    void getFoodShouldThrowIfFelineThrows() throws Exception {
+    void getFoodShouldThrowIfFelineThrowsExceptionTest() throws Exception {
         Mockito.when(felineMock.eatMeat()).thenThrow(new Exception("Ошибка"));
-        Exception ex = assertThrows(Exception.class, () -> cat.getFood(),
+        assertThrows(Exception.class, () -> cat.getFood(),
                 "Если feline.eatMeat() бросает Exception, Cat.getFood() тоже должен бросить");
+    }
+
+    @Test
+    void getFoodShouldThrowExceptionWithExpectedMessageTest() throws Exception {
+        Mockito.when(felineMock.eatMeat()).thenThrow(new Exception("Ошибка"));
+        Exception ex = assertThrows(Exception.class, () -> cat.getFood());
         assertEquals("Ошибка", ex.getMessage());
     }
+
+
 }

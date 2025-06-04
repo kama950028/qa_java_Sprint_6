@@ -18,7 +18,7 @@ public class LionTest {
     }
 
     @Test
-    void constructorShouldSetHasManeCorrectly() throws Exception {
+    void constructorShouldSetHasManeCorrectlyTest() throws Exception {
         Lion maleLion = new Lion("Самец", felineMock);
         assertTrue(maleLion.doesHaveMane(), "Для 'Самец' у льва должна быть грива (true)");
 
@@ -27,7 +27,7 @@ public class LionTest {
     }
 
     @Test
-    void constructorShouldThrowOnInvalidSex() {
+    void constructorShouldThrowOnInvalidSexTest() {
         Exception ex = assertThrows(Exception.class,
                 () -> new Lion("Неизвестно", felineMock),
                 "Если передать не 'Самец' и не 'Самка', должен бросаться Exception");
@@ -36,20 +36,20 @@ public class LionTest {
     }
 
     @Test
-    void getKittensShouldDelegateToFeline() throws Exception {
+    void getKittensShouldDelegateToFelineTest() throws Exception {
         Lion lion = new Lion("Самец", felineMock);
 
         // Настраиваем: пусть felineMock.getKittens() вернёт 7
-        Mockito.when(felineMock.getKittens()).thenReturn(7);
+        Mockito.when(felineMock.getKittens()).thenReturn(1);
 
         int kittensCount = lion.getKittens();
 
         Mockito.verify(felineMock).getKittens();
-        assertEquals(7, kittensCount, "Lion.getKittens() должен вернуть то же, что и feline.getKittens()");
+        assertEquals(1, kittensCount, "Lion.getKittens() должен вернуть то же, что и feline.getKittens()");
     }
 
     @Test
-    void getFoodShouldDelegateToFelineEatMeat() throws Exception {
+    void getFoodShouldDelegateToFelineEatMeatTest() throws Exception {
         Lion lion = new Lion("Самец", felineMock);
         List<String> expectedFood = List.of("Трава"); // хотя Feline эмулируется, любая коллекция хороша
         Mockito.when(felineMock.eatMeat()).thenReturn(expectedFood);
@@ -61,7 +61,7 @@ public class LionTest {
     }
 
     @Test
-    void getFoodShouldThrowIfFelineThrows() throws Exception {
+    void getFoodShouldThrowIfFelineThrowsTest() throws Exception {
         Lion lion = new Lion("Самец", felineMock);
         Mockito.when(felineMock.eatMeat()).thenThrow(new Exception("Кошка голодна"));
 
