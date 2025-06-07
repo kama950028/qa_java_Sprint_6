@@ -36,37 +36,57 @@ public class LionTest {
     }
 
     @Test
-    void getKittensShouldDelegateToFelineTest() throws Exception {
+    void getKittensReturnsValueFromFelineTest() throws Exception {
         Lion lion = new Lion("Самец", felineMock);
-
-        // Настраиваем: пусть felineMock.getKittens() вернёт 7
         Mockito.when(felineMock.getKittens()).thenReturn(1);
-
         int kittensCount = lion.getKittens();
-
-        Mockito.verify(felineMock).getKittens();
         assertEquals(1, kittensCount, "Lion.getKittens() должен вернуть то же, что и feline.getKittens()");
     }
 
     @Test
-    void getFoodShouldDelegateToFelineEatMeatTest() throws Exception {
+    void getKittensCallsFelineGetKittensTest() throws Exception {
         Lion lion = new Lion("Самец", felineMock);
-        List<String> expectedFood = List.of("Трава"); // хотя Feline эмулируется, любая коллекция хороша
+        Mockito.when(felineMock.getKittens()).thenReturn(1);
+        lion.getKittens();
+        Mockito.verify(felineMock).getKittens();
+    }
+
+
+    @Test
+    void getFoodReturnsEatMeatResultTest() throws Exception {
+        Lion lion = new Lion("Самец", felineMock);
+        List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         Mockito.when(felineMock.eatMeat()).thenReturn(expectedFood);
-
         List<String> actualFood = lion.getFood();
-
-        Mockito.verify(felineMock).eatMeat();
         assertEquals(expectedFood, actualFood, "Lion.getFood() должен вернуть список от feline.eatMeat()");
     }
 
     @Test
-    void getFoodShouldThrowIfFelineThrowsTest() throws Exception {
+    void getFoodCallsEatMeatOnFelineTest() throws Exception {
+        Lion lion = new Lion("Самец", felineMock);
+        Mockito.when(felineMock.eatMeat()).thenReturn(List.of("Животные", "Птицы", "Рыба"));
+        lion.getFood();
+        Mockito.verify(felineMock).eatMeat();
+    }
+
+    @Test
+    void getFoodThrowsExceptionIfFelineThrowsTest() throws Exception {
+        Lion lion = new Lion("Самец", felineMock);
+        Mockito.when(felineMock.eatMeat()).thenThrow(new Exception("Кошка голодна"));
+
+        assertThrows(Exception.class, lion::getFood,
+                "Lion.getFood() должен выбросить Exception, если feline.eatMeat() кидает исключение");
+    }
+
+    @Test
+    void getFoodThrowsExceptionWithCorrectMessageTest() throws Exception {
         Lion lion = new Lion("Самец", felineMock);
         Mockito.when(felineMock.eatMeat()).thenThrow(new Exception("Кошка голодна"));
 
         Exception ex = assertThrows(Exception.class, lion::getFood);
-        assertEquals("Кошка голодна", ex.getMessage());
+        assertEquals("Кошка голодна", ex.getMessage(),
+                "Lion.getFood() должен выбрасывать Exception с сообщением 'Кошка голодна'");
     }
+
 
 }
