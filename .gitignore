@@ -21,3 +21,16 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# Каталоги IDE
+.idea/
+
+# Папка target полностью
+/target/
+
+
+# --- JaCoCo: снимаем игнор только для этих путей ---
+!target/jacoco.exec
+!target/site/
+!target/site/jacoco/
+!target/site/jacoco/**
